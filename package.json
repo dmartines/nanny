@@ -1,0 +1,27 @@
+{
+  "name": "nanny",
+  "version": "1.0.0",
+  "description": "Nanny",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.13.3",
+    "react-copy-to-clipboard": "^3.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dmartines/nanny.git"
+  },
+  "keywords": [
+    "klip"
+  ],
+  "author": "dan martines",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dmartines/nanny/issues"
+  },
+  "homepage": "https://github.com/dmartines/nanny"
+}
