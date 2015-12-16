@@ -46,8 +46,8 @@ var Schedule = React.createClass({
 
 	getInitialState: function() {
 
-		let totalhours = 0;
-		let timetable = [
+		var totalhours = 0;
+		var timetable = [
 				{
 					day: 'Segunda',
 					amhourin: '6',
@@ -134,9 +134,9 @@ var Schedule = React.createClass({
 	},
 
 	calculateHours: function(constructor) {
-		let totalhours = 0;
-		let dayhours = 0;
-		let timetable = this.state.timetable;
+		var totalhours = 0;
+		var dayhours = 0;
+		var timetable = this.state.timetable;
 		timetable.forEach(function(t, index) {
 			dayhours = 0;
 			var start = t.amhourin + ":" + t.amminin;
