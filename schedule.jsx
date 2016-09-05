@@ -6,16 +6,53 @@ var EmailSchedule = React.createClass({
 		timetable: React.PropTypes.array
 	},
 
+	diff: function(start, end) {
+	    start = start.split(":");
+	    end = end.split(":");
+	    var startDate = new Date(0, 0, 0, start[0], start[1], 0);
+	    var endDate = new Date(0, 0, 0, end[0], end[1], 0);
+	    var diff = endDate.getTime() - startDate.getTime();
+	    return diff / (1000*60*60);
+
+	    var hours = Math.floor(diff / 1000 / 60 / 60);
+	    diff -= hours * 1000 * 60 * 60;
+	    var minutes = Math.floor(diff / 1000 / 60);
+	    
+	    return (hours < 9 ? "0" : "") + hours + ":" + (minutes < 9 ? "0" : "") + minutes;
+	},
+
 	render: function() {
 		var WeeklySchedule = this.props.timetable.map(function(d, index) {
+			var output;
+			var allday;
+			if (d.amhourout == 12) {
+				var pmhourin = (d.pmhourin*1) + 12;
+				var start = d.amhourout + ":" + d.amminout;
+				var end = pmhourin + ":" + d.pmminin;
+				var diff = this.diff(start,end);
+				output = 
+					<div>
+						<h4>{d.day} </h4>
+						<p>{d.amhourin}:{d.amminin} {d.amhourin < 12 ? 'am' : 'pm'} até <span className="red"><strong>{d.pmhourout}:{d.pmminout} pm</strong></span> </p>
+						<p><span className='gray italic'>{diff} hour break for lunch</span></p>
+					</div>
+			      ;
+			} else {
+				allday = '';
+				output = 
+					<div>
+						<h4>{d.day} </h4>
+						<p>{d.amhourin}:{d.amminin} {d.amhourin < 12 ? 'am' : 'pm'} até {d.amhourout}:{d.amminout} {d.amhourout < 12 ? 'am' : 'pm'} </p>
+						<p>{d.pmhourin}:{d.pmminin} pm até <span className="red"><strong>{d.pmhourout}:{d.pmminout} pm</strong></span></p>
+					</div>
+			      ;
+			}
 			return (
 				<div key={index}>
-					<h4>{d.day} <span className="gray">({d.diffday} hours)</span></h4>
-					<p>Entra {d.amhourin}:{d.amminin} até {d.amhourout}:{d.amminout} ({d.diffam} hours)</p>
-					<p>Entra {d.pmhourin}:{d.pmminin} até {d.pmhourout}:{d.pmminout} ({d.diffpm} hours)</p>
-				</div>				
-		      );
-		});
+				{output}
+				</div>
+				);
+		}.bind(this));
 		return (
 			<div className="print">
 				<h3>Horario da semana</h3>
@@ -50,68 +87,68 @@ var Schedule = React.createClass({
 		var timetable = [
 				{
 					day: 'Segunda',
-					amhourin: '6',
-					amminin: '30',
+					amhourin: '7',
+					amminin: '00',
 					amhourout: '9',
 					amminout: '15',
 					diffam: '1.5',
 					pmhourin: '2',
 					pmminin: '45',
 					pmhourout: '7',
-					pmminout: '30',
+					pmminout: '00',
 					diffpm: '',
 					diffday: ''
 				},
 				{
 					day: 'Terça',
-					amhourin: '6',
-					amminin: '30',
-					amhourout: '9',
-					amminout: '15',
+					amhourin: '7',
+					amminin: '00',
+					amhourout: '12',
+					amminout: '00',
 					diffam: '',
-					pmhourin: '2',
-					pmminin: '45',
-					pmhourout: '7',
+					pmhourin: '1',
+					pmminin: '00',
+					pmhourout: '6',
 					pmminout: '30',
 					diffpm: '',
 					diffday: ''
 				},				{
 					day: 'Quarta',
-					amhourin: '6',
-					amminin: '30',
-					amhourout: '9',
-					amminout: '15',
+					amhourin: '7',
+					amminin: '00',
+					amhourout: '12',
+					amminout: '00',
 					diffam: '',
-					pmhourin: '2',
-					pmminin: '45',
+					pmhourin: '1',
+					pmminin: '30',
 					pmhourout: '7',
-					pmminout: '30',
+					pmminout: '00',
 					diffpm: '',
 					diffday: ''
 				},				{
 					day: 'Quinta',
-					amhourin: '6',
-					amminin: '30',
+					amhourin: '7',
+					amminin: '00',
 					amhourout: '12',
 					amminout: '00',
 					diffam: '',
-					pmhourin: '12',
-					pmminin: '30',
+					pmhourin: '1',
+					pmminin: '00',
 					pmhourout: '6',
 					pmminout: '30',
-					diffpm: '4.5',
+					diffpm: '',
 					diffday: ''
 				},				{
 					day: 'Sexta',
-					amhourin: '6',
-					amminin: '30',
+					amhourin: '7',
+					amminin: '00',
 					amhourout: '9',
 					amminout: '15',
 					diffam: '',
 					pmhourin: '2',
 					pmminin: '45',
 					pmhourout: '6',
-					pmminout: '00',
+					pmminout: '30',
 					diffpm: '',
 					diffday: ''
 				},			
